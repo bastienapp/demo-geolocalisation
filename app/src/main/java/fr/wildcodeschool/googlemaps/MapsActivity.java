@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -20,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -149,6 +149,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMyLocationEnabled(true); // position de l'utilisateur sur la carte
+
+        // création d'un marqueur d'exemple
+        Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
+
+        // on crée les informations liées au marqueur
+        MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards", R.drawable.ic_android_black_24dp);
+
+        // on associe les informations au marqueur
+        wcs.setTag(wcsInfos);
+
+        // création de l'adapter et association de ce dernier à la map
+        CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(this);
+        mMap.setInfoWindowAdapter(customInfoWindow);
 
         // vérifie les permissions d'utilisation du GPS une fois la carte chargée
         checkPermission();
