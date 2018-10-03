@@ -149,6 +149,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
 
         // vérifie les permissions d'utilisation du GPS une fois la carte chargée
         checkPermission();
