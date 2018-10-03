@@ -41,6 +41,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
+        mMap.setMyLocationEnabled(true); // position de l'utilisateur sur la carte
+
         // récupération de la dernière position connue de l'utilisateur
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation()
@@ -147,8 +149,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.setMyLocationEnabled(true); // position de l'utilisateur sur la carte
 
         // vérifie les permissions d'utilisation du GPS une fois la carte chargée
         checkPermission();
