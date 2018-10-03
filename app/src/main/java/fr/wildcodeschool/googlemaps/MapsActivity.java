@@ -41,6 +41,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
+        initMarkers();
+
         mMap.setMyLocationEnabled(true); // position de l'utilisateur sur la carte
 
         // récupération de la dernière position connue de l'utilisateur
@@ -76,6 +78,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // initialisation de la vérification du déplacement par GPS et par réseau WIFI
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+    }
+
+    private void initMarkers() {
+        // création d'un marqueur d'exemple
+        Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
+
+        // on crée les informations liées au marqueur
+        MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards", R.drawable.ic_android_black_24dp);
+
+        // on associe les informations au marqueur
+        wcs.setTag(wcsInfos);
+
+        // création de l'adapter et association de ce dernier à la map
+        CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(this);
+        mMap.setInfoWindowAdapter(customInfoWindow);
     }
 
     private void moveCamera(Location location) {
@@ -149,19 +166,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-        // création d'un marqueur d'exemple
-        Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
-
-        // on crée les informations liées au marqueur
-        MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards", R.drawable.ic_android_black_24dp);
-
-        // on associe les informations au marqueur
-        wcs.setTag(wcsInfos);
-
-        // création de l'adapter et association de ce dernier à la map
-        CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(this);
-        mMap.setInfoWindowAdapter(customInfoWindow);
+        mMap = googleMap;
 
         // vérifie les permissions d'utilisation du GPS une fois la carte chargée
         checkPermission();
